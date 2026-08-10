@@ -1,1 +1,3 @@
-export {ColorStrategy} from "./ColorStrategy.js";
+export { DrawStrategy } from "./DrawStrategy.js";
+export { SelectStrategy } from "./SelectStrategy.js";
+export { ShapeStrategy, Modes } from "./ShapeStrategy.js";
