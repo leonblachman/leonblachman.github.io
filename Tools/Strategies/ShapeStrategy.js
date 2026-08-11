@@ -22,6 +22,6 @@ export class ShapeStrategy {
     }
 
     Activate() {
-        alert("Shape tool (" + this.mode + ") activated");
+        console.log("Shape tool (" + this.mode + ") activated");
     }
 }

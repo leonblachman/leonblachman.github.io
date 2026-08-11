@@ -1,35 +1,36 @@
 import {applyStyle} from '../ViewHelper.js';
 
-const toolWidth = 35;
+const toolSize = 35;
 const toolPad = 5;
 const toolGap = 3;
 
 export class ToolBar {
-    #selectedTool = null
+    #selectedTool = null;
 
     constructor(tools) {
-        let div = p5.createDiv();
-        div.position(20, 20);
-        applyStyle(div, `
-width: ${toolWidth + toolPad * 2}px
-padding: ${toolPad - toolGap}px 0
+        let isHorizontal = false;
+        let toolBar = p5.createDiv();
+        toolBar.position(20, 20);
+        applyStyle(toolBar, `
+display: flex
+align-items: center
+flex-direction: ${isHorizontal ? 'row' : 'column'}
+${isHorizontal ? 'height' : 'width'}: ${toolSize + toolPad * 2}px
+padding: ${isHorizontal ? `0 ${toolPad - toolGap}px` : `${toolPad - toolGap}px 0`}
 background: lightgray
+border-width: 4px
 border-style: ridge
 border-color: aliceblue `);
-        div.draggable();
-
+        toolBar.draggable();
+        
         let color = p5.createColorPicker('deeppink');
         applyToolStyle(color);
         applyStyle(color, `
 padding: 2px 4px
-background: darkgray `);
-        color.changed(() => {
-            div.elt.querySelectorAll('button').forEach(button => {
-                button.style.color = color.value();
-            });
-        });
-        color.parent(div);
+background: silver `);
+        color.parent(toolBar);
 
+        let toolsMap = new Map();
         tools.forEach(tool =>
         {
             let button = p5.createButton(tool.icon);
@@ -40,21 +41,51 @@ justify-content: center
 align-items: center
 color: ${color.value()} `);
             button.mouseClicked(() => {
+                if (this.#selectedTool === tool)
+                    return;
+                if (this.#selectedTool !== null)
+                toolsMap.get(this.#selectedTool).style('background', 'buttonface');
                 this.#selectedTool?.Deactivate();
                 this.#selectedTool = tool;
                 this.#selectedTool.Activate();
+                toolsMap.get(this.#selectedTool).style('background', 'radial-gradient(buttonface 55%, darkgrey 80%, grey)');
             });
-            button.parent(div);
+            button.parent(toolBar);
+            toolsMap.set(tool, button);
         });
 
+        toolBar.doubleClicked(() => {
+            isHorizontal = !isHorizontal;
+            applyStyle(toolBar, `
+flex-direction: ${isHorizontal ? 'row' : 'column'}
+${isHorizontal ? 'width' : 'height'}: AUTO
+${isHorizontal ? 'height' : 'width'}: ${toolSize + toolPad * 2}px
+padding: ${isHorizontal ? `0 ${toolPad - toolGap}px` : `${toolPad - toolGap}px 0`}`);
+            updateToolMargin(color);
+            toolsMap.forEach((button) => updateToolMargin(button));
+            });
+
+        color.changed(() => {
+            toolBar.elt.querySelectorAll('button').forEach(button => {
+                button.style.color = color.value();
+            });
+        });
+
+        function updateToolMargin(element) {
+            const marginVer = `${toolGap}px ${toolPad}px`;
+            const marginHor = `${toolPad}px ${toolGap}px`;
+            element.style('margin', isHorizontal ? marginHor : marginVer);
+        }
+
         function applyToolStyle(element) {
-            element.size(toolWidth, toolWidth);
+            element.size(toolSize, toolSize);
+            updateToolMargin(element);
             applyStyle(element,`
-margin: ${toolGap}px ${toolPad}px
 border-width: 2px
 border-radius: 15px
 border-style: outset
 border-color: aliceblue
+font-size: 20px;
 text-shadow: 0 -1px darkgray, 1px 0 gray, 0 1px darkgray, -1px 0 darkgray `);
         }
     }

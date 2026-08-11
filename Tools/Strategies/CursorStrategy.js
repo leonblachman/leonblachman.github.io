@@ -1,5 +1,5 @@
 export class CursorStrategy {
     Activate() {
-        alert("Cursor tool activated");
+        console.log("Cursor tool activated");
     }
 }

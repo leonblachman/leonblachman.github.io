@@ -1,6 +1,6 @@
 export class DrawStrategy {
     Activate() {
-        alert("Draw tool activated");
+        console.log("Draw tool activated");
     }
 
     onMousePressed() {
