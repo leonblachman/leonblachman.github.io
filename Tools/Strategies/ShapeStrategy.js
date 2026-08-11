@@ -1,4 +1,5 @@
 export const Modes = Object.freeze({
+    Line: "Line",
     Ellipse: "Ellipse",
     Rectangle: "Rectangle",
     Triangle: "Triangle",
@@ -8,6 +9,7 @@ export const Modes = Object.freeze({
 export class ShapeStrategy {
     constructor(mode) {
         switch (mode) {
+            case Modes.Line:
             case Modes.Ellipse:
             case Modes.Rectangle:
             case Modes.Triangle:
@@ -19,7 +21,7 @@ export class ShapeStrategy {
         }
     }
 
-    onSelected() {
-        alert("Shape tool selected " + this.mode);
+    Activate() {
+        alert("Shape tool (" + this.mode + ") activated");
     }
 }

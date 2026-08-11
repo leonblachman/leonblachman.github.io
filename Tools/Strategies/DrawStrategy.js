@@ -1,5 +1,17 @@
 export class DrawStrategy {
-    onSelected() {
-        alert("Draw tool selected");
+    Activate() {
+        alert("Draw tool activated");
     }
+
+    onMousePressed() {
+
+    };
+
+    onMouseReleased() {
+
+    };
+    
+    onMouseMoved() {
+
+    };
 }

@@ -1,9 +1,11 @@
 export class Tool {
     constructor(icon, strategy) {
         this.icon = icon;
-        this.onSelected = () => strategy.onSelected() ?? function() {};
-        this.onMousePressed = () => strategy.onMousePressed() ?? function() {};
-        this.onMouseReleased = () => strategy.onMouseReleased() ?? function() {};
-        this.onMouseMoved = () => strategy.onMousePressed() ?? function() {};
+        
+        this.Activate = () => strategy.Activate?.();
+        this.Deactivate = () => strategy.Deactivate?.();
+        this.onMousePressed = () => strategy.onMousePressed?.();
+        this.onMouseReleased = () => strategy.onMouseReleased?.();
+        this.onMouseMoved = () => strategy.onMousePressed?.();
     }
 }

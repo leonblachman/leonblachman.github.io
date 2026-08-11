@@ -11,7 +11,7 @@ function sketch(p) {
     };
 
     p.draw = function () {
-        p.background(200);
+        p.background(255);
     };
 
     p.windowResized = function () {
