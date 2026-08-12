@@ -7,7 +7,7 @@ const toolGap = 3;
 export class ToolBar {
     #selectedTool = null;
 
-    constructor(tools) {
+    constructor(p5, tools) {
         let isHorizontal = false;
         let toolBar = p5.createDiv();
         toolBar.position(20, 20);

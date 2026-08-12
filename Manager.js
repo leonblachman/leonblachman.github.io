@@ -4,8 +4,8 @@ import * as Strategies from './Tools/Strategies/Strategies.js';
 const {Modes} = Strategies;
 
 export class Manager {
-    constructor() {
-        this.toolbar = new ToolBar(Manager.getDefaultTools());
+    constructor(p5) {
+        this.toolbar = new ToolBar(p5, Manager.getDefaultTools());
     }
 
     static getDefaultTools() {

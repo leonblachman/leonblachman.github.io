@@ -6,7 +6,7 @@ function sketch(p) {
     let manager
 
     p.setup = function () {
-        manager = new Manager();
+        manager = new Manager(p);
         p.createCanvas(p.windowWidth, p.windowHeight);
     };
 
@@ -19,4 +19,4 @@ function sketch(p) {
     }
 }
 
-window.p5 = new p5(sketch);
+new p5(sketch);
