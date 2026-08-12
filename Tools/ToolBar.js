@@ -56,6 +56,7 @@ color: ${color.value()} `);
 
         toolBar.doubleClicked(() => {
             isHorizontal = !isHorizontal;
+
             applyStyle(toolBar, `
 flex-direction: ${isHorizontal ? 'row' : 'column'}
 ${isHorizontal ? 'width' : 'height'}: AUTO
@@ -63,7 +64,16 @@ ${isHorizontal ? 'height' : 'width'}: ${toolSize + toolPad * 2}px
 padding: ${isHorizontal ? `0 ${toolPad - toolGap}px` : `${toolPad - toolGap}px 0`}`);
             updateToolMargin(color);
             toolsMap.forEach((button) => updateToolMargin(button));
-            });
+
+            let size = toolBar.size();
+            let oldPos = toolBar.position();
+            let offX = p5.mouseX - oldPos.x;
+            let offY = p5.mouseY - oldPos.y;
+            if (isHorizontal)
+                toolBar.position(p5.mouseX - offY, p5.mouseY + offX - size.height); // inverts offsets, shifts y origin
+            else
+                toolBar.position(p5.mouseX + offY - size.width, p5.mouseY - offX); // inverts offsets, shifts x origin
+        });
 
         color.changed(() => {
             toolBar.elt.querySelectorAll('button').forEach(button => {
