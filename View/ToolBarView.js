@@ -1,13 +1,13 @@
-import {applyStyle} from '../ViewHelper.js';
+import {applyStyle} from './ViewHelper.js';
 
 const toolSize = 35;
 const toolPad = 5;
 const toolGap = 3;
 
-export class ToolBar {
-    #selectedTool = null;
+export class ToolBarView {
+    constructor(p5, toolController) {
+        let tools = toolController.getTools();
 
-    constructor(p5, tools) {
         let isHorizontal = false;
         let toolBar = p5.createDiv();
         toolBar.position(20, 20);
@@ -41,14 +41,13 @@ justify-content: center
 align-items: center
 color: ${color.value()} `);
             button.mouseClicked(() => {
-                if (this.#selectedTool === tool)
+                let previousTool = toolController.getSelectedTool();
+                if (previousTool === tool)
                     return;
-                if (this.#selectedTool !== null)
-                toolsMap.get(this.#selectedTool).style('background', 'buttonface');
-                this.#selectedTool?.Deactivate();
-                this.#selectedTool = tool;
-                this.#selectedTool.Activate();
-                toolsMap.get(this.#selectedTool).style('background', 'radial-gradient(buttonface 55%, darkgrey 80%, grey)');
+                if (previousTool !== null)
+                    toolsMap.get(previousTool).style('background', 'buttonface');
+                toolController.setSelectedTool(tool);
+                toolsMap.get(tool).style('background', 'radial-gradient(buttonface 55%, darkgrey 80%, grey)');
             });
             button.parent(toolBar);
             toolsMap.set(tool, button);
@@ -99,16 +98,4 @@ font-size: 20px;
 text-shadow: 0 -1px darkgray, 1px 0 gray, 0 1px darkgray, -1px 0 darkgray `);
         }
     }
-    
-    onMousePressed() {
-        this.#selectedTool?.onMousePressed();
-    };
-
-    onMouseReleased() {
-        this.#selectedTool?.onMouseReleased();
-    };
-    
-    onMouseMoved() {
-        this.#selectedTool?.onMouseMoved();
-    };
 }

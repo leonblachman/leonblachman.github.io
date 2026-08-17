@@ -1,22 +1,28 @@
-// created with p5.js @ https://p5js.org/copyright.html
+import {Tool} from './Tools/Tool.js';
+import {ToolController} from './Tools/ToolController.js';
+import {ToolBarView} from './View/ToolBarView.js';
+import {CanvasView} from './View/CanvasView.js';
+import * as Strategies from './Tools/Strategies/Strategies.js';
+const {Modes} = Strategies;
 
-import {Manager} from './Manager.js';
+export class Sketch {
+    constructor(p5) {
+        let toolController = new ToolController(Sketch.getDefaultTools());
+        let toolBarView = new ToolBarView(p5, toolController);
+        let canvasView = new CanvasView(p5, toolController);
+    }
 
-function sketch(p) {
-    let manager
-
-    p.setup = function () {
-        manager = new Manager(p);
-        p.createCanvas(p.windowWidth, p.windowHeight);
-    };
-
-    p.draw = function () {
-        p.background(255);
-    };
-
-    p.windowResized = function () {
-        p.resizeCanvas(p.windowWidth, p.windowHeight);
+    static getDefaultTools() {
+        return [
+            new Tool("✥", new Strategies.CursorStrategy()),
+            new Tool("✎", new Strategies.DrawStrategy()),
+            // new Tool("▩", new Strategies.FillStrategy()),
+            // new Tool("A", new Strategies.TextStrategy()),
+            new Tool("─", new Strategies.ShapeStrategy(Modes.Line)),
+            new Tool("●", new Strategies.ShapeStrategy(Modes.Ellipse)),
+            new Tool("∎", new Strategies.ShapeStrategy(Modes.Rectangle)),
+            new Tool("▲", new Strategies.ShapeStrategy(Modes.Triangle)),
+            new Tool("◣", new Strategies.ShapeStrategy(Modes.TriangleRight)),
+        ];
     }
 }
-
-new p5(sketch);
