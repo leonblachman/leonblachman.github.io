@@ -6,10 +6,15 @@ import * as Strategies from './Strategies/Strategies.js';
 const {Modes} = Strategies;
 
 export class Sketch {
+    #canvasView;
     constructor(p5) {
         let toolController = new ToolController(Sketch.getDefaultTools());
-        let toolBarView = new ToolBarView(p5, toolController);
-        let canvasView = new CanvasView(p5, toolController);
+        _ = new ToolBarView(p5, toolController);
+        this.#canvasView = new CanvasView(p5, toolController);
+    }
+
+    windowResized() {
+        this.#canvasView.windowResized();
     }
 
     static main(p5) {
@@ -17,15 +22,10 @@ export class Sketch {
 
         p5.setup = function () {
             sketch = new Sketch(p5);
-            p5.createCanvas(p5.windowWidth, p5.windowHeight);
-        };
-
-        p5.draw = function () {
-            p5.background(255);
         };
 
         p5.windowResized = function () {
-            p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
+            sketch.windowResized();
         }
     }
 
