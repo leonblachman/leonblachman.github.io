@@ -6,15 +6,28 @@ import * as Strategies from './Strategies/Strategies.js';
 const {Modes} = Strategies;
 
 export class Sketch {
+    #toolController;
     #canvasView;
     constructor(p5) {
-        let toolController = new ToolController(Sketch.getDefaultTools());
-        _ = new ToolBarView(p5, toolController);
-        this.#canvasView = new CanvasView(p5, toolController);
+        this.#toolController = new ToolController(Sketch.getDefaultTools());
+        let _ = new ToolBarView(p5, this.#toolController);
+        this.#canvasView = new CanvasView(p5);
     }
 
-    windowResized() {
-        this.#canvasView.windowResized();
+    onWindowResized() {
+        this.#canvasView.onWindowResized();
+    }
+
+    onMousePressed() {
+        this.#toolController.onMousePressed();
+    }
+
+    onMouseReleased() {
+        this.#toolController.onMouseReleased();
+    }
+
+    onMouseDragged() {
+        this.#toolController.onMouseDragged();
     }
 
     static main(p5) {
@@ -25,7 +38,19 @@ export class Sketch {
         };
 
         p5.windowResized = function () {
-            sketch.windowResized();
+            sketch.onWindowResized();
+        }
+
+        p5.mousePressed = function () {
+            sketch.onMousePressed();
+        }
+
+        p5.mouseReleased = function () {
+            sketch.onMouseReleased();
+        }
+
+        p5.mouseDragged = function () {
+            sketch.onMouseDragged();
         }
     }
 

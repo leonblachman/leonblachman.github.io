@@ -28,7 +28,7 @@ export class ToolController {
         this.#selectedTool?.onMouseReleased();
     };
     
-    onMouseMoved() {
-        this.#selectedTool?.onMouseMoved();
+    onMouseDragged() {
+        this.#selectedTool?.onMouseDragged();
     };
 }

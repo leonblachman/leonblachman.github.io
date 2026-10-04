@@ -11,7 +11,7 @@ export class DrawStrategy {
 
     };
     
-    onMouseMoved() {
+    onMouseDragged() {
 
     };
 }
