@@ -15,20 +15,18 @@ export class ToolController {
     }
     
     setSelectedTool(tool) {
-        this.#selectedTool?.Deactivate();
         this.#selectedTool = tool;
-        this.#selectedTool.Activate();
     }
 
-    onMousePressed() {
-        this.#selectedTool?.onMousePressed();
+    onMousePressed(x, y) {
+        this.#selectedTool?.onMousePressed(x, y);
     };
 
-    onMouseReleased() {
-        this.#selectedTool?.onMouseReleased();
+    onMouseReleased(x, y) {
+        this.#selectedTool?.onMouseReleased(x, y);
     };
     
-    onMouseDragged() {
-        this.#selectedTool?.onMouseDragged();
+    onMouseDragged(x, y) {
+        this.#selectedTool?.onMouseDragged(x, y);
     };
 }

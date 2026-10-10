@@ -1,10 +1,9 @@
 export class Tool {
     constructor(icon, strategy) {
         this.icon = icon;
-        this.Activate = () => strategy.Activate?.();
-        this.Deactivate = () => strategy.Deactivate?.();
-        this.onMousePressed = () => strategy.onMousePressed?.();
-        this.onMouseReleased = () => strategy.onMouseReleased?.();
-        this.onMouseDragged = () => strategy.onMouseDragged?.();
+        this.getCurrent = () => strategy.getCurrent?.();
+        this.onMousePressed = (x, y) => strategy.onMousePressed?.(x, y);
+        this.onMouseReleased = (x, y) => strategy.onMouseReleased?.(x, y);
+        this.onMouseDragged = (x, y) => strategy.onMouseDragged?.(x, y);
     }
 }

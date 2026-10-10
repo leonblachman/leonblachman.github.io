@@ -20,8 +20,4 @@ export class ShapeStrategy {
                 throw new RangeError("Invalid shape mode");
         }
     }
-
-    Activate() {
-        console.log("Shape tool (" + this.mode + ") activated");
-    }
 }

@@ -14,20 +14,27 @@ export class Sketch {
         this.#canvasView = new CanvasView(p5);
     }
 
+    onDraw() {
+        let current = this.#toolController.getSelectedTool()?.getCurrent();
+        if (current != null) {
+            this.#canvasView.onDrawPreview(current);
+        }
+    }
+
     onWindowResized() {
         this.#canvasView.onWindowResized();
     }
 
-    onMousePressed() {
-        this.#toolController.onMousePressed();
+    onMousePressed(x, y) {
+        this.#toolController.onMousePressed(x, y);
     }
 
-    onMouseReleased() {
-        this.#toolController.onMouseReleased();
+    onMouseReleased(x, y) {
+        this.#toolController.onMouseReleased(x, y);
     }
 
-    onMouseDragged() {
-        this.#toolController.onMouseDragged();
+    onMouseDragged(x, y) {
+        this.#toolController.onMouseDragged(x, y);
     }
 
     static main(p5) {
@@ -37,20 +44,24 @@ export class Sketch {
             sketch = new Sketch(p5);
         };
 
+        p5.draw = function () {
+            sketch.onDraw();
+        }
+
         p5.windowResized = function () {
             sketch.onWindowResized();
         }
 
         p5.mousePressed = function () {
-            sketch.onMousePressed();
+            sketch.onMousePressed(p5.mouseX, p5.mouseY);
         }
 
         p5.mouseReleased = function () {
-            sketch.onMouseReleased();
+            sketch.onMouseReleased(p5.mouseX, p5.mouseY);
         }
 
         p5.mouseDragged = function () {
-            sketch.onMouseDragged();
+            sketch.onMouseDragged(p5.mouseX, p5.mouseY);
         }
     }
 

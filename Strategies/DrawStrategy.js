@@ -1,17 +1,20 @@
 export class DrawStrategy {
-    Activate() {
-        console.log("Draw tool activated");
-    }
+    #points = null;
 
-    onMousePressed() {
-
+    getCurrent() {
+        return this.#points;
     };
 
-    onMouseReleased() {
+    onMousePressed(x, y) {
+        this.#points = [];
+        this.#points.push({ x, y });
+    };
 
+    onMouseReleased(x, y) {
+        this.#points = null;
     };
     
-    onMouseDragged() {
-
+    onMouseDragged(x, y) {
+        this.#points.push({ x, y });
     };
 }
