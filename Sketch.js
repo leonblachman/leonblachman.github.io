@@ -9,6 +9,7 @@ export class Sketch {
     #toolController;
     #toolBarView;
     #canvasView;
+    #items = [];
     constructor(p5) {
         this.#toolController = new ToolController(Sketch.getDefaultTools());
         this.#toolBarView = new ToolBarView(p5, this.#toolController);
@@ -17,6 +18,9 @@ export class Sketch {
 
     onDraw() {
         this.#canvasView.clear();
+        for (let item of this.#items) {
+            this.#canvasView.draw(item.data, item.color);
+        }
         let current = this.#toolController.getSelectedTool()?.getCurrent();
         if (current != null) {
             this.#canvasView.draw(current, this.#toolBarView.getColor());
@@ -38,7 +42,12 @@ export class Sketch {
     }
 
     onMouseReleased(x, y) {
-        this.#toolController.onMouseReleased(x, y);
+        let data = this.#toolController.onMouseReleased(x, y);
+        if (data != null)
+        {
+            let color = this.#toolBarView.getColor();
+            this.#items.push({ data, color });
+        }
     }
 
     static main(p5) {
