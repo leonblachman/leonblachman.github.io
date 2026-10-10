@@ -21,12 +21,12 @@ export class ToolController {
     onMousePressed(x, y) {
         this.#selectedTool?.onMousePressed(x, y);
     };
-
-    onMouseReleased(x, y) {
-        this.#selectedTool?.onMouseReleased(x, y);
-    };
     
     onMouseDragged(x, y) {
         this.#selectedTool?.onMouseDragged(x, y);
+    };
+
+    onMouseReleased(x, y) {
+        return this.#selectedTool?.onMouseReleased(x, y);
     };
 }

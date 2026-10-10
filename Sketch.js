@@ -28,21 +28,17 @@ export class Sketch {
     }
 
     onMousePressed(x, y) {
-        if (this.#toolBarView.isHover())
+        if (this.#toolBarView.isActive())
             return;
         this.#toolController.onMousePressed(x, y);
     }
 
-    onMouseReleased(x, y) {
-        if (this.#toolBarView.isHover())
-            return;
-        this.#toolController.onMouseReleased(x, y);
+    onMouseDragged(x, y) {
+        this.#toolController.onMouseDragged(x, y);
     }
 
-    onMouseDragged(x, y) {
-        if (this.#toolBarView.isHover())
-            return;
-        this.#toolController.onMouseDragged(x, y);
+    onMouseReleased(x, y) {
+        this.#toolController.onMouseReleased(x, y);
     }
 
     static main(p5) {

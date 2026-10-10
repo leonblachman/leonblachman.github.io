@@ -7,6 +7,12 @@ export const Modes = Object.freeze({
   });
 
 export class ShapeStrategy {
+    #mode;
+
+    getMode() {
+        return this.#mode;
+    }
+
     constructor(mode) {
         switch (mode) {
             case Modes.Line:
@@ -14,7 +20,7 @@ export class ShapeStrategy {
             case Modes.Rectangle:
             case Modes.Triangle:
             case Modes.TriangleRight:
-                this.mode = mode;
+                this.#mode = mode;
                 break;
             default:
                 throw new RangeError("Invalid shape mode");

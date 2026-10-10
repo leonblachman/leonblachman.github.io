@@ -8,7 +8,7 @@ export class ToolBarView {
     #toolBar;
     #color;
 
-    isHover() {
+    isActive() {
         return this.#toolBar.elt.matches(':hover');
     }
 
@@ -44,7 +44,7 @@ background: silver `);
         let toolsMap = new Map();
         tools.forEach(tool =>
         {
-            let button = p5.createButton(tool.icon);
+            let button = p5.createButton(tool.getIcon());
             applyToolStyle(button);
             applyStyle(button, `
 display: inline-flex

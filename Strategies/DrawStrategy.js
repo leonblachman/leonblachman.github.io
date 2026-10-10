@@ -10,11 +10,14 @@ export class DrawStrategy {
         this.#points.push({ x, y });
     };
 
-    onMouseReleased(x, y) {
-        this.#points = null;
-    };
-    
     onMouseDragged(x, y) {
         this.#points.push({ x, y });
+    };
+    
+    onMouseReleased(x, y) {
+        this.#points.push({ x, y });
+        let points = this.#points;
+        this.#points = null;
+        return points;
     };
 }
