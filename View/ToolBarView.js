@@ -6,9 +6,14 @@ const toolGap = 3;
 
 export class ToolBarView {
     #toolBar;
+    #color;
 
     isHover() {
         return this.#toolBar.elt.matches(':hover');
+    }
+
+    getColor() {
+        return this.#color.value();
     }
 
     constructor(p5, toolController) {
@@ -29,12 +34,12 @@ border-style: ridge
 border-color: aliceblue `);
         this.#toolBar.draggable();
         
-        let color = p5.createColorPicker('deeppink');
-        applyToolStyle(color);
-        applyStyle(color, `
+        this.#color = p5.createColorPicker('deeppink');
+        applyToolStyle(this.#color);
+        applyStyle(this.#color, `
 padding: 2px 4px
 background: silver `);
-        color.parent(this.#toolBar);
+        this.#color.parent(this.#toolBar);
 
         let toolsMap = new Map();
         tools.forEach(tool =>
@@ -45,7 +50,7 @@ background: silver `);
 display: inline-flex
 justify-content: center
 align-items: center
-color: ${color.value()} `);
+color: ${this.#color.value()} `);
             button.mouseClicked(() => {
                 let previousTool = toolController.getSelectedTool();
                 if (previousTool === tool)
@@ -67,7 +72,7 @@ flex-direction: ${isHorizontal ? 'row' : 'column'}
 ${isHorizontal ? 'width' : 'height'}: AUTO
 ${isHorizontal ? 'height' : 'width'}: ${toolSize + toolPad * 2}px
 padding: ${isHorizontal ? `0 ${toolPad - toolGap}px` : `${toolPad - toolGap}px 0`}`);
-            updateToolMargin(color);
+            updateToolMargin(this.#color);
             toolsMap.forEach((button) => updateToolMargin(button));
 
             let size = this.#toolBar.size();
@@ -80,9 +85,9 @@ padding: ${isHorizontal ? `0 ${toolPad - toolGap}px` : `${toolPad - toolGap}px 0
                 this.#toolBar.position(p5.mouseX + offY - size.width, p5.mouseY - offX); // inverts offsets, shifts x origin
         });
 
-        color.changed(() => {
+        this.#color.changed(() => {
             this.#toolBar.elt.querySelectorAll('button').forEach(button => {
-                button.style.color = color.value();
+                button.style.color = this.#color.value();
             });
         });
 

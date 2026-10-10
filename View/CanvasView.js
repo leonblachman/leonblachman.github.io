@@ -5,11 +5,16 @@ export class CanvasView {
         this.#p5.createCanvas(this.#p5.windowWidth, this.#p5.windowHeight);
     }
 
-    onDrawPreview(current) {
+    clear() {
+        this.#p5.background(255);
+    }
+
+    draw(element, color) {
+        this.#p5.stroke(color);
         this.#p5.noFill();
         this.#p5.beginShape();
-        for (let i = 0; i < current.length; i++) {
-            this.#p5.vertex(current[i].x, current[i].y);
+        for (let i = 0; i < element.length; i++) {
+            this.#p5.vertex(element[i].x, element[i].y);
         }
         this.#p5.endShape();
     }

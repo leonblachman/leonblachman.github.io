@@ -16,9 +16,10 @@ export class Sketch {
     }
 
     onDraw() {
+        this.#canvasView.clear();
         let current = this.#toolController.getSelectedTool()?.getCurrent();
         if (current != null) {
-            this.#canvasView.onDrawPreview(current);
+            this.#canvasView.draw(current, this.#toolBarView.getColor());
         }
     }
 
