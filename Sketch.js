@@ -7,10 +7,11 @@ const {Modes} = Strategies;
 
 export class Sketch {
     #toolController;
+    #toolBarView;
     #canvasView;
     constructor(p5) {
         this.#toolController = new ToolController(Sketch.getDefaultTools());
-        let _ = new ToolBarView(p5, this.#toolController);
+        this.#toolBarView = new ToolBarView(p5, this.#toolController);
         this.#canvasView = new CanvasView(p5);
     }
 
@@ -26,14 +27,20 @@ export class Sketch {
     }
 
     onMousePressed(x, y) {
+        if (this.#toolBarView.isHover())
+            return;
         this.#toolController.onMousePressed(x, y);
     }
 
     onMouseReleased(x, y) {
+        if (this.#toolBarView.isHover())
+            return;
         this.#toolController.onMouseReleased(x, y);
     }
 
     onMouseDragged(x, y) {
+        if (this.#toolBarView.isHover())
+            return;
         this.#toolController.onMouseDragged(x, y);
     }
 

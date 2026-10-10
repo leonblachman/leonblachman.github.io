@@ -5,13 +5,19 @@ const toolPad = 5;
 const toolGap = 3;
 
 export class ToolBarView {
+    #toolBar;
+
+    isHover() {
+        return this.#toolBar.elt.matches(':hover');
+    }
+
     constructor(p5, toolController) {
         let tools = toolController.getTools();
 
         let isHorizontal = false;
-        let toolBar = p5.createDiv();
-        toolBar.position(20, 20);
-        applyStyle(toolBar, `
+        this.#toolBar = p5.createDiv();
+        this.#toolBar.position(20, 20);
+        applyStyle(this.#toolBar, `
 display: flex
 align-items: center
 flex-direction: ${isHorizontal ? 'row' : 'column'}
@@ -21,14 +27,14 @@ background: lightgray
 border-width: 4px
 border-style: ridge
 border-color: aliceblue `);
-        toolBar.draggable();
+        this.#toolBar.draggable();
         
         let color = p5.createColorPicker('deeppink');
         applyToolStyle(color);
         applyStyle(color, `
 padding: 2px 4px
 background: silver `);
-        color.parent(toolBar);
+        color.parent(this.#toolBar);
 
         let toolsMap = new Map();
         tools.forEach(tool =>
@@ -49,14 +55,14 @@ color: ${color.value()} `);
                 toolController.setSelectedTool(tool);
                 toolsMap.get(tool).style('background', 'radial-gradient(buttonface 55%, darkgrey 80%, grey)');
             });
-            button.parent(toolBar);
+            button.parent(this.#toolBar);
             toolsMap.set(tool, button);
         });
 
-        toolBar.doubleClicked(() => {
+        this.#toolBar.doubleClicked(() => {
             isHorizontal = !isHorizontal;
 
-            applyStyle(toolBar, `
+            applyStyle(this.#toolBar, `
 flex-direction: ${isHorizontal ? 'row' : 'column'}
 ${isHorizontal ? 'width' : 'height'}: AUTO
 ${isHorizontal ? 'height' : 'width'}: ${toolSize + toolPad * 2}px
@@ -64,18 +70,18 @@ padding: ${isHorizontal ? `0 ${toolPad - toolGap}px` : `${toolPad - toolGap}px 0
             updateToolMargin(color);
             toolsMap.forEach((button) => updateToolMargin(button));
 
-            let size = toolBar.size();
-            let oldPos = toolBar.position();
+            let size = this.#toolBar.size();
+            let oldPos = this.#toolBar.position();
             let offX = p5.mouseX - oldPos.x;
             let offY = p5.mouseY - oldPos.y;
             if (isHorizontal)
-                toolBar.position(p5.mouseX - offY, p5.mouseY + offX - size.height); // inverts offsets, shifts y origin
+                this.#toolBar.position(p5.mouseX - offY, p5.mouseY + offX - size.height); // inverts offsets, shifts y origin
             else
-                toolBar.position(p5.mouseX + offY - size.width, p5.mouseY - offX); // inverts offsets, shifts x origin
+                this.#toolBar.position(p5.mouseX + offY - size.width, p5.mouseY - offX); // inverts offsets, shifts x origin
         });
 
         color.changed(() => {
-            toolBar.elt.querySelectorAll('button').forEach(button => {
+            this.#toolBar.elt.querySelectorAll('button').forEach(button => {
                 button.style.color = color.value();
             });
         });

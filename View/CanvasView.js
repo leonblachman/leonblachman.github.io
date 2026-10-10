@@ -3,8 +3,6 @@ export class CanvasView {
     constructor(p5) {
         this.#p5 = p5;
         this.#p5.createCanvas(this.#p5.windowWidth, this.#p5.windowHeight);
-
-        console.log(this.#p5.windowWidth, this.#p5.windowHeight)
     }
 
     onDrawPreview(current) {
@@ -18,7 +16,5 @@ export class CanvasView {
 
     onWindowResized() {
         this.#p5.resizeCanvas(this.#p5.windowWidth, this.#p5.windowHeight);
-        console.log(this.#p5.windowWidth, this.#p5.windowHeight)
-
     }
 }
