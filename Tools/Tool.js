@@ -1,15 +1,28 @@
+export const DrawMode = Object.freeze({
+    None: "None",
+    Edge: "Edge",
+    Fill: "Fill",
+    Both: "Both",
+  });
+
 export class Tool {
     #icon;
     #strategy;
+    #drawMode;
     #isActive = false;
+
+    constructor(icon, strategy, drawMode) {
+        this.#icon = icon;
+        this.#strategy = strategy;
+        this.#drawMode = drawMode;
+    }
 
     getIcon() {
         return this.#icon;
     }
 
-    constructor(icon, strategy) {
-        this.#icon = icon;
-        this.#strategy = strategy;
+    getDrawMode() {
+        return this.#drawMode;
     }
 
     getCurrent() {

@@ -1,3 +1,3 @@
 export { DrawStrategy } from "./DrawStrategy.js";
-export { CursorStrategy } from "./CursorStrategy.js";
-export { ShapeStrategy, Modes } from "./ShapeStrategy.js";
+export { FillStrategy } from "./FillStrategy.js";
+export { ShapeStrategy, ShapeMode } from "./ShapeStrategy.js";

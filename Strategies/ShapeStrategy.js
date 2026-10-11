@@ -1,4 +1,4 @@
-export const Modes = Object.freeze({
+export const ShapeMode = Object.freeze({
     Line: "Line",
     Ellipse: "Ellipse",
     Rectangle: "Rectangle",
@@ -15,11 +15,11 @@ export class ShapeStrategy {
 
     constructor(mode) {
         switch (mode) {
-            case Modes.Line:
-            case Modes.Ellipse:
-            case Modes.Rectangle:
-            case Modes.Triangle:
-            case Modes.TriangleRight:
+            case ShapeMode.Line:
+            case ShapeMode.Ellipse:
+            case ShapeMode.Rectangle:
+            case ShapeMode.Triangle:
+            case ShapeMode.TriangleRight:
                 this.#mode = mode;
                 break;
             default:

@@ -1,9 +1,9 @@
-import {Tool} from './Tools/Tool.js';
+import {Tool, DrawMode} from './Tools/Tool.js';
 import {ToolController} from './Tools/ToolController.js';
 import {ToolBarView} from './View/ToolBarView.js';
 import {CanvasView} from './View/CanvasView.js';
 import * as Strategies from './Strategies/Strategies.js';
-const {Modes} = Strategies;
+const {ShapeMode} = Strategies;
 
 export class Sketch {
     #toolController;
@@ -19,11 +19,13 @@ export class Sketch {
     onDraw() {
         this.#canvasView.clear();
         for (let item of this.#items) {
-            this.#canvasView.draw(item.data, item.color);
+            this.#canvasView.draw(item.data, item.stroke, item.fill);
         }
         let current = this.#toolController.getSelectedTool()?.getCurrent();
         if (current != null) {
-            this.#canvasView.draw(current, this.#toolBarView.getColor());
+            let stroke = this.#toolBarView.getStroke();
+            let fill = this.#toolBarView.getFill();
+            this.#canvasView.draw(current, stroke, fill);
         }
     }
 
@@ -45,8 +47,9 @@ export class Sketch {
         let data = this.#toolController.onMouseReleased(x, y);
         if (data != null)
         {
-            let color = this.#toolBarView.getColor();
-            this.#items.push({ data, color });
+            let stroke = this.#toolBarView.getStroke();
+            let fill = this.#toolBarView.getFill();
+            this.#items.push({ data, stroke, fill });
         }
     }
 
@@ -80,15 +83,13 @@ export class Sketch {
 
     static getDefaultTools() {
         return [
-            new Tool("✥", new Strategies.CursorStrategy()),
-            new Tool("✎", new Strategies.DrawStrategy()),
-            // new Tool("▩", new Strategies.FillStrategy()),
-            // new Tool("A", new Strategies.TextStrategy()),
-            new Tool("─", new Strategies.ShapeStrategy(Modes.Line)),
-            new Tool("●", new Strategies.ShapeStrategy(Modes.Ellipse)),
-            new Tool("∎", new Strategies.ShapeStrategy(Modes.Rectangle)),
-            new Tool("▲", new Strategies.ShapeStrategy(Modes.Triangle)),
-            new Tool("◣", new Strategies.ShapeStrategy(Modes.TriangleRight)),
+            new Tool("✎", new Strategies.DrawStrategy(), DrawMode.Edge),
+            new Tool("─", new Strategies.ShapeStrategy(ShapeMode.Line), DrawMode.Edge),
+            new Tool("●", new Strategies.ShapeStrategy(ShapeMode.Ellipse), DrawMode.Both),
+            new Tool("∎", new Strategies.ShapeStrategy(ShapeMode.Rectangle), DrawMode.Both),
+            new Tool("▲", new Strategies.ShapeStrategy(ShapeMode.Triangle), DrawMode.Both),
+            new Tool("◣", new Strategies.ShapeStrategy(ShapeMode.TriangleRight), DrawMode.Both),
+            new Tool("▩", new Strategies.FillStrategy(), DrawMode.Fill),
         ];
     }
 }

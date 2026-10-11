@@ -9,9 +9,17 @@ export class CanvasView {
         this.#p5.background(255);
     }
 
-    draw(element, color) {
-        this.#p5.stroke(color);
-        this.#p5.noFill();
+    draw(element, stroke, fill) {
+        if (stroke == null)
+            this.#p5.noStroke();
+        else
+            this.#p5.stroke(stroke);
+        
+        if (fill == null)
+            this.#p5.noFill();
+        else
+            this.#p5.fill(fill);
+
         this.#p5.beginShape();
         for (let i = 0; i < element.length; i++) {
             this.#p5.vertex(element[i].x, element[i].y);
